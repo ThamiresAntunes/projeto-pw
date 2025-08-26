@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// Modelos da entidade Instituicao
+model Instituicao {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  cnpj         String   @unique
+  contact      String
+  description  String
+  localization Json
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+}
+
+// Modelos da entidade User 
+enum Role {
+  user
+  admin
+  admin_master
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String @unique
+  password String
+  role     Role   @default(user)
+}
