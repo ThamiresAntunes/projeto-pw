@@ -7,7 +7,14 @@ export interface User {
   password: string;
   role: Role;
 
-  instituicoes: Institution[]
+  instituicoes?: Institution[]
+}
+
+export interface UserUpdate {
+  id: string;
+  name: string;
+  email: string;
+  role: Role;
 }
 
 export interface UpdateLoginUser {
