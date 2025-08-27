@@ -28,11 +28,6 @@ export const validateEmailUser = async (req: Request, res: Response, next: NextF
   }
 };
 
-/*Email is required
-Email already in use
-Error validating email:
-Internal server error*/
-
 export const checkEmailExists = async (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
   

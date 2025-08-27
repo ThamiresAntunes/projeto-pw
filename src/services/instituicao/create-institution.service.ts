@@ -1,8 +1,9 @@
 import prisma from "../../prisma/client";
 import { Institution } from "../../@types/instituicao";
 
-export async function createInstitutionService(data: Institution): Promise<void> {
+export async function createInstitutionService(data: Institution, userId: string): Promise<void> {
   const { name, cnpj, contact, description, positionX, positionY } = data;
+  
   await prisma.instituicao.create({
     data: {
       name,
@@ -11,8 +12,9 @@ export async function createInstitutionService(data: Institution): Promise<void>
       description,
       localization : {
         type: "Point",
-        coordinates: [positionX, positionY],  // Mongo uses [longitude, latitude]
-      }
+        coordinates: [positionX, positionY],  // Mongo uses [longitude, latitude] 
+      },
+      createdBy: { connect: { id: userId } },
     }
   });
 }

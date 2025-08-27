@@ -19,6 +19,7 @@ export const authorizeRoleMaster = (req: Request, res: Response, next: NextFunct
     next();
 };
 
+// Função para autorizar apenas usuários com a role "admin" ou superior
 export const authorizeRoleAdmin = (req: Request, res: Response, next: NextFunction) => {
     const user = req.user;
 
@@ -28,6 +29,23 @@ export const authorizeRoleAdmin = (req: Request, res: Response, next: NextFuncti
     }
 
     if (user.role !== "admin" && user.role !== "admin_master") {
+        res.status(403).json({ error: 'Acesso negado. Permissão insuficiente.' });
+        return;
+    }
+
+    next();
+};
+
+// Função para autorizar apenas usuários com a role "healthcare" ou superior
+export const authorizeRoleHealthcare = (req: Request, res: Response, next: NextFunction) => {
+    const user = req.user;
+
+    if (!user) {
+        res.status(401).json({ error: 'Usuário não autenticado' });
+        return;
+    }
+
+    if (user.role !== "healthcare" && user.role !== "admin" && user.role !== "admin_master") {
         res.status(403).json({ error: 'Acesso negado. Permissão insuficiente.' });
         return;
     }

@@ -5,6 +5,8 @@ export interface Institution {
   description: string;
   positionX: number;
   positionY: number;
+
+  createdById?: string;
 }
 
 export interface InstitutionGet {
@@ -15,6 +17,7 @@ export interface InstitutionGet {
   description: string;
   positionX?: number;
   positionY?: number;
+  createdById?: string;
   createdAt: Date;
   updatedAt: Date;
 }
