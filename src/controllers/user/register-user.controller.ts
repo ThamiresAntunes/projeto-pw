@@ -1,19 +1,17 @@
 import { Request, Response } from "express";
 import { registerUserService } from "../../services/user/register-user.service";
 import { Role } from "@prisma/client";
+import { userSchema } from "../../validations/user/validation-user";
 
 // Controlador para registrar um novo usuário
 export const registerUserController = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { name, email, password } = req.body;
 
-        if (!name || !email || !password) {
-            res.status(400).json({ error: "Todos os campos são obrigatórios" });
-            return;
-        }
+        const parsedData = userSchema.parse(req.body);
 
-        const user = await registerUserService( name, email, password );
+        const user = await registerUserService( parsedData.name, parsedData.email, parsedData.password );
         res.status(201).json({ mensagem: "Usuário cadastrado", usuario: { nome: user.name, email: user.email, role: user.role } });
+        return;
         
     } catch (error) {
         console.error("Erro ao registrar usuário:", error);
