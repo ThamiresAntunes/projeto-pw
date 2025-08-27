@@ -14,7 +14,7 @@ import { authorizeRoleAdmin } from "../middlewares/user/authorize-role";
 
 const router = Router();
 
-router.post("/", authenticateToken, authorizeRoleAdmin, validateCnpj,createInstitutionController);
+router.post("/", authenticateToken, authorizeRoleAdmin, validateCnpj, createInstitutionController);
 router.delete("/:id", authenticateToken, authorizeRoleAdmin, validateId, deleteInstitutionController);
 router.get("/", getInstitutionController);
 router.get("/:id", validateId, getIdInstitutionController);
