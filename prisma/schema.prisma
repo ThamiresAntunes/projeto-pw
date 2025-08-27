@@ -15,6 +15,11 @@ model Instituicao {
   contact      String
   description  String
   localization Json
+
+  
+  createdBy User   @relation(fields: [createdById], references: [id])
+  createdById String @db.ObjectId
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @default(now()) @updatedAt
 }
@@ -22,6 +27,7 @@ model Instituicao {
 // Modelos da entidade User 
 enum Role {
   user
+  healthcare
   admin
   admin_master
 }
@@ -32,4 +38,6 @@ model User {
   email    String @unique
   password String
   role     Role   @default(user)
+
+  instituicoes Instituicao[]
 }

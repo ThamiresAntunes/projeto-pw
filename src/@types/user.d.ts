@@ -1,4 +1,4 @@
-export type Role = "user" | "admin" | "admin_master";
+export type Role = "user" | "healthcare" | "admin" | "admin_master";
 
 export interface User {
   id: string;
@@ -6,6 +6,8 @@ export interface User {
   email: string;
   password: string;
   role: Role;
+
+  instituicoes: Institution[]
 }
 
 export interface UpdateLoginUser {

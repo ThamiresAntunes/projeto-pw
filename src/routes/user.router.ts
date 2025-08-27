@@ -21,7 +21,7 @@ router.delete("/:id", authenticateToken, authorizeRoleMaster, deleteUserControll
 router.patch("/:id/role", authenticateToken, authorizeRoleMaster, updateRoleUserController);
 
 //para teste
-//router.get("/users", listUsersController); 
+//router.get("/", listUsersController); 
 //router.delete("/users/:id", deleteUserController);
 //router.patch("/users/:id/role", updateRoleUserController);
 

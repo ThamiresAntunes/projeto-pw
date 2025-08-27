@@ -18,4 +18,5 @@ export const getInstitutionController = async (req: Request, res: Response) => {
         return;
     }
 
+    
 }

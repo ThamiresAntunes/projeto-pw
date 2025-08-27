@@ -8,13 +8,17 @@ import { updateLocalizationInstitutionController } from "../controllers/institut
 import { validateCnpj } from "../middlewares/institution/validate-cnpj";
 import { validateId } from "../middlewares/institution/validateId";
 
+// Middleware de permissões de usuário
+import { authenticateToken } from "../middlewares/user/authenticate-token";
+import { authorizeRoleAdmin } from "../middlewares/user/authorize-role";
+
 const router = Router();
 
-router.post("/", validateCnpj,createInstitutionController);
-router.delete("/:id", validateId, deleteInstitutionController);
+router.post("/", authenticateToken, authorizeRoleAdmin, validateCnpj,createInstitutionController);
+router.delete("/:id", authenticateToken, authorizeRoleAdmin, validateId, deleteInstitutionController);
 router.get("/", getInstitutionController);
 router.get("/:id", validateId, getIdInstitutionController);
-router.put("/:id", validateId, updateInstitutionController)
-router.patch("/:id", validateId, updateLocalizationInstitutionController);
+router.put("/:id", authenticateToken, authorizeRoleAdmin, validateId, updateInstitutionController);
+router.patch("/:id", authenticateToken, authorizeRoleAdmin, validateId, updateLocalizationInstitutionController);
 
 export default router;
