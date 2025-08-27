@@ -6,8 +6,6 @@ export interface User {
   email: string;
   password: string;
   role: Role;
-
-  instituicoes?: Institution[]
 }
 
 export interface UserUpdate {

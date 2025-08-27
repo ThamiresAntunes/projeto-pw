@@ -11,10 +11,11 @@ import { validateId } from "../middlewares/institution/validateId";
 // Middleware de permissões de usuário
 import { authenticateToken } from "../middlewares/user/authenticate-token";
 import { authorizeRoleAdmin } from "../middlewares/user/authorize-role";
+import { authorizeRoleHealthcare } from "../middlewares/user/authorize-role";
 
 const router = Router();
 
-router.post("/", authenticateToken, authorizeRoleAdmin, validateCnpj, createInstitutionController);
+router.post("/", authenticateToken, authorizeRoleHealthcare, validateCnpj, createInstitutionController);
 router.delete("/:id", authenticateToken, authorizeRoleAdmin, validateId, deleteInstitutionController);
 router.get("/", getInstitutionController);
 router.get("/:id", validateId, getIdInstitutionController);
