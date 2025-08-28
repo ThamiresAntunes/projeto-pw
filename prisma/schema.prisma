@@ -54,4 +54,5 @@ model User {
   role     Role   @default(user)
 
   instituicoes Instituicao[]
+  conteudos      ConteudoEducativo[] @relation("UserConteudos")
 }
