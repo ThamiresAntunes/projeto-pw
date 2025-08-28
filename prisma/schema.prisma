@@ -24,6 +24,20 @@ model Instituicao {
   updatedAt    DateTime @default(now()) @updatedAt
 }
 
+// NOVO MODELO: ConteudoEducativo
+model ConteudoEducativo {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  imageUrl  String? // URL para uma imagem (opcional)
+  linkUrl   String? // Link para um artigo/vídeo externo (opcional)
+
+  author    User     @relation("UserConteudos", fields: [authorId], references: [id])
+  authorId  String   @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 // Modelos da entidade User 
 enum Role {
   user
