@@ -24,6 +24,23 @@ model Instituicao {
   updatedAt    DateTime @default(now()) @updatedAt
 }
 
+// NOVO MODELO: Comentario
+model Comentario {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+
+  // Relação com o autor do comentário
+  author    User     @relation("UserComentarios", fields: [authorId], references: [id])
+  authorId  String   @db.ObjectId
+
+  // Relação com o conteúdo que está sendo comentado
+  conteudo  ConteudoEducativo @relation("ConteudoComentarios", fields: [conteudoId], references: [id])
+  conteudoId String  @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 // NOVO MODELO: ConteudoEducativo
 model ConteudoEducativo {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
@@ -34,6 +51,8 @@ model ConteudoEducativo {
 
   author    User     @relation("UserConteudos", fields: [authorId], references: [id])
   authorId  String   @db.ObjectId
+
+  comentarios Comentario[] @relation("ConteudoComentarios")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -55,4 +74,5 @@ model User {
 
   instituicoes Instituicao[]
   conteudos      ConteudoEducativo[] @relation("UserConteudos")
+  comentarios    Comentario[]        @relation("UserComentarios")
 }
