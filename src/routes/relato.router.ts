@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { createRelatoController } from "../controllers/relato/create-relato.controller";
 import { getRelatosController } from "../controllers/relato/get-relatos.controller";
+import { getIdRelatosController } from "../controllers/relato/get-id-relato.controller";
 
 // middlewares
 import { authenticateToken } from "../middlewares/user/authenticate-token";
@@ -11,5 +12,7 @@ const router = Router();
 router.post("/", authenticateToken, createRelatoController);
 // Obter todos os relatos
 router.get("/",authenticateToken, getRelatosController);
+// Obter um relato pelo ID
+router.get("/:id",authenticateToken, getIdRelatosController);
 
 export default router;
