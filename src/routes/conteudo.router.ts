@@ -7,6 +7,7 @@ import { listConteudosController } from "../controllers/conteudo/list-conteudos.
 import { getConteudoByIdController } from "../controllers/conteudo/get-conteudo.controller";
 import { updateConteudoController } from "../controllers/conteudo/update-conteudo.controller";
 import { deleteConteudoController } from "../controllers/conteudo/delete-conteudo.controller";
+import comentarioRouter from "./comentario.router";
 
 const router = Router();
 
@@ -25,5 +26,7 @@ router.get("/:id", getConteudoByIdController);
 // Rotas para atualizar e deletar (protegidas por autenticação)
 router.put("/:id", authenticateToken, updateConteudoController);
 router.delete("/:id", authenticateToken, deleteConteudoController);
+
+router.use("/:conteudoId/comentarios", comentarioRouter);
 
 export default router;
