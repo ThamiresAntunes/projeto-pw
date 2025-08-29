@@ -3,16 +3,16 @@ import cors from "cors";
 import institutionRouter from "./routes/institution.router";
 import userRouter from "./routes/user.router";
 import conteudoRouter from "./routes/conteudo.router";
+import relatoRouter from "./routes/relato.router";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-//obs: eu coloco uma rota geral tipo app.use("/api"); ou uma pra cada entidade??
 app.use("/institutions", institutionRouter);
 app.use("/users", userRouter);
 app.use("/conteudos", conteudoRouter);
+app.use("/relatos", relatoRouter);
 
 const PORT = 3000;
 
