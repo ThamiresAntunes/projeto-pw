@@ -14,7 +14,7 @@ model Instituicao {
   cnpj         String   @unique
   contact      String
   description  String
-  localization Json
+  localization Json  
 
   
   createdBy User   @relation(fields: [createdById], references: [id])
@@ -24,6 +24,39 @@ model Instituicao {
   updatedAt    DateTime @default(now()) @updatedAt
 }
 
+// NOVO MODELO: Comentario
+model Comentario {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+
+  // Relação com o autor do comentário
+  author    User     @relation("UserComentarios", fields: [authorId], references: [id])
+  authorId  String   @db.ObjectId
+
+  // Relação com o conteúdo que está sendo comentado
+  conteudo  ConteudoEducativo @relation("ConteudoComentarios", fields: [conteudoId], references: [id])
+  conteudoId String  @db.ObjectId
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// NOVO MODELO: ConteudoEducativo
+model ConteudoEducativo {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  imageUrl  String? // URL para uma imagem (opcional)
+  linkUrl   String? // Link para um artigo/vídeo externo (opcional)
+
+  author    User     @relation("UserConteudos", fields: [authorId], references: [id])
+  authorId  String   @db.ObjectId
+
+  comentarios Comentario[] @relation("ConteudoComentarios")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 // Modelos da entidade User 
 enum Role {
   user
@@ -41,6 +74,8 @@ model User {
 
   instituicoes Instituicao[]
   relatos Relato[]
+  comentarios    Comentario[]        @relation("UserComentarios")
+  conteudos      ConteudoEducativo[] @relation("UserConteudos")
 }
 
 // Modelos da entidade Relato
