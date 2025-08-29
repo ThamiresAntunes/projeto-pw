@@ -7,26 +7,20 @@ import { listConteudosController } from "../controllers/conteudo/list-conteudos.
 import { getConteudoByIdController } from "../controllers/conteudo/get-conteudo.controller";
 import { updateConteudoController } from "../controllers/conteudo/update-conteudo.controller";
 import { deleteConteudoController } from "../controllers/conteudo/delete-conteudo.controller";
+
 import comentarioRouter from "./comentario.router";
 
 const router = Router();
 
-// Rota para criar um novo conteúdo (protegida)
-router.post(
-  "/",
-  authenticateToken,
-  authorizeRoleHealthcare, // Garante que o usuário é no mínimo 'healthcare'
-  createConteudoController
-);
-
-// Rotas públicas para visualização
+// --- Rotas de Conteúdo ---
+router.post("/", authenticateToken, authorizeRoleHealthcare, createConteudoController);
 router.get("/", listConteudosController);
 router.get("/:id", getConteudoByIdController);
-
-// Rotas para atualizar e deletar (protegidas por autenticação)
 router.put("/:id", authenticateToken, updateConteudoController);
 router.delete("/:id", authenticateToken, deleteConteudoController);
 
+// --- Rotas de Comentários Aninhadas ---
+// Todas as requisições para /:conteudoId/comentarios serão gerenciadas pelo comentarioRouter
 router.use("/:conteudoId/comentarios", comentarioRouter);
 
 export default router;
