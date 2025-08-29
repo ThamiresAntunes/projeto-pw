@@ -3,6 +3,7 @@ import { createRelatoController } from "../controllers/relato/create-relato.cont
 import { getRelatosController } from "../controllers/relato/get-relatos.controller";
 import { getIdRelatosController } from "../controllers/relato/get-id-relato.controller";
 import { deleteRelatoController } from "../controllers/relato/delete-relato.controller";
+import { updateRelatoController } from "../controllers/relato/update-relato.controller";
 
 // middlewares
 import { authenticateToken } from "../middlewares/user/authenticate-token";
@@ -17,5 +18,7 @@ router.get("/",authenticateToken, getRelatosController);
 router.get("/:id",authenticateToken, getIdRelatosController);
 // Deletar um relato pelo ID
 router.delete("/:id",authenticateToken, deleteRelatoController);
+// Atualizar um relato pelo ID
+router.put("/:id",authenticateToken, updateRelatoController);
 
 export default router;
