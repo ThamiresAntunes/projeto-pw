@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getConteudoByIdService } from "../../services/conteudo/get-conteudo.service";
 import { updateConteudoService } from "../../services/conteudo/update-conteudo.service";
-
+  
 export const updateConteudoController = async (req: Request, res: Response): Promise<void> => {
   try {
     const { id } = req.params;
@@ -19,7 +19,16 @@ export const updateConteudoController = async (req: Request, res: Response): Pro
       return;
     }
 
-    const updatedConteudo = await updateConteudoService(id, req.body);
+    const { title, content, linkUrl } = req.body;
+    const imageUrl = req.file ? `/files/${req.file.filename}` : undefined;
+
+    const updatedConteudo = await updateConteudoService(id, {
+      title,
+      content,
+      linkUrl,
+      imageUrl
+    });
+
     res.status(200).json(updatedConteudo);
   } catch (error) {
     console.error("Erro ao atualizar conteúdo:", error);

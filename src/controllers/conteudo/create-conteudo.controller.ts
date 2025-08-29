@@ -8,7 +8,20 @@ export const createConteudoController = async (req: Request, res: Response): Pro
       res.status(401).json({ error: "Usuário não autenticado." });
       return;
     }
-    const conteudo = await createConteudoService(req.body, authorId);
+
+    // Os dados do formulário vêm de req.body
+    const { title, content, linkUrl } = req.body;
+
+    // O arquivo vem de req.file (graças ao Multer)
+    const imageUrl = req.file ? `/files/${req.file.filename}` : undefined;
+
+    const conteudo = await createConteudoService({
+      title,
+      content,
+      linkUrl,
+      imageUrl
+    }, authorId);
+    
     res.status(201).json(conteudo);
   } catch (error) {
     console.error("Erro ao criar conteúdo:", error);
